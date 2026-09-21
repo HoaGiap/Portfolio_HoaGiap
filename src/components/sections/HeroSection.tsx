@@ -20,7 +20,7 @@ import { useTheme } from '../../context/ThemeContext';
 
 export const HeroSection: React.FC = () => {
   const { theme } = useTheme();
-  const [activeVisualTab, setActiveVisualTab] = useState<'3d' | 'code' | 'avatar'>('3d');
+  const [activeVisualTab, setActiveVisualTab] = useState<'3d' | 'code' | 'avatar'>('avatar');
 
   const handleScrollTo = (id: string) => {
     const el = document.getElementById(id);
