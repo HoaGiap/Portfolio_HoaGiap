@@ -101,7 +101,7 @@ export const AboutSection: React.FC = () => {
                     <div className="flex items-start gap-3">
                       <span className={`font-mono text-xs font-bold shrink-0 mt-0.5 ${isCobalt ? 'text-white' : 'text-[#0000F2]'}`}>[+]</span>
                       <span className={`text-sm leading-relaxed ${isCobalt ? 'text-white/90' : isLight ? 'text-slate-700' : 'text-[#CCCCCC]'}`}>
-                        Tốt nghiệp Kỹ sư CNTT tại Đại học Nam Cần Thơ (<strong className={isCobalt ? 'text-white font-mono' : 'text-black dark:text-white font-mono'}>GPA: 3.14/4.0</strong>), Đồ án Tốt nghiệp Medical AI đạt độ chính xác <strong className={`font-mono ${isCobalt ? 'text-white underline' : 'text-[#0000F2]'}`}>99.42%</strong> (Hội đồng đánh giá Xuất sắc).
+                        Tốt nghiệp Kỹ sư CNTT tại Đại học Nam Cần Thơ (<strong className={`font-mono font-bold ${isCobalt ? 'text-white' : 'text-[#0000F2]'}`}>GPA: 3.14/4.0</strong>), Đồ án Tốt nghiệp Medical AI đạt độ chính xác <strong className={`font-mono ${isCobalt ? 'text-white underline' : 'text-[#0000F2]'}`}>99.42%</strong> (Hội đồng đánh giá Xuất sắc).
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
@@ -193,14 +193,27 @@ export const AboutSection: React.FC = () => {
               >
                 <DoubleBezelCard
                   className="h-full"
-                  innerClassName="p-5 sm:p-6 flex flex-col justify-center text-center sm:text-left h-full"
+                  innerClassName="p-4 sm:p-5 flex flex-col justify-center text-center sm:text-left h-full overflow-hidden"
                 >
                   <div
-                    className={`text-3xl sm:text-4xl md:text-5xl font-display font-black mb-1 tracking-tight ${
+                    className={`font-display font-black mb-1.5 tracking-tight flex items-baseline justify-center sm:justify-start ${
                       isCobalt ? 'text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]' : 'text-[#0000F2]'
                     }`}
                   >
-                    {stat.value}
+                    {stat.value.includes('/') ? (
+                      <span className="flex items-baseline truncate leading-none">
+                        <span className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl">
+                          {stat.value.split('/')[0]}
+                        </span>
+                        <span className="text-sm sm:text-base lg:text-lg font-mono font-bold opacity-75 ml-0.5">
+                          /{stat.value.split('/')[1]}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl leading-none truncate">
+                        {stat.value}
+                      </span>
+                    )}
                   </div>
                   <div
                     className={`text-xs sm:text-sm font-mono uppercase tracking-wider font-bold ${

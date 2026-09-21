@@ -40,8 +40,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute('data-theme', theme);
-    root.classList.remove('theme-dark', 'theme-cobalt', 'theme-light');
+    root.classList.remove('dark', 'light', 'theme-dark', 'theme-cobalt', 'theme-light');
     root.classList.add(`theme-${theme}`);
+    if (theme === 'dark' || theme === 'cobalt') {
+      root.classList.add('dark');
+    }
     localStorage.setItem('hermes-theme', theme);
   }, [theme]);
 
