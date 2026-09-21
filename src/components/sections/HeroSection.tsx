@@ -9,6 +9,7 @@ import {
   Code2,
   Database,
   Box,
+  User,
 } from 'lucide-react';
 import { personalProfile } from '../../data/portfolioData';
 import { Badge } from '../ui/Badge';
@@ -19,7 +20,7 @@ import { useTheme } from '../../context/ThemeContext';
 
 export const HeroSection: React.FC = () => {
   const { theme } = useTheme();
-  const [activeVisualTab, setActiveVisualTab] = useState<'3d' | 'code'>('3d');
+  const [activeVisualTab, setActiveVisualTab] = useState<'3d' | 'code' | 'avatar'>('3d');
 
   const handleScrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -251,7 +252,7 @@ export const HeroSection: React.FC = () => {
             className="lg:col-span-5 w-full max-w-md mx-auto"
           >
             {/* View Switcher Pills */}
-            <div className="flex items-center justify-end gap-1 mb-2 font-mono text-xs">
+            <div className="flex flex-wrap items-center justify-end gap-1.5 mb-2 font-mono text-xs">
               <button
                 onClick={() => setActiveVisualTab('3d')}
                 className={`px-3 py-1 uppercase border transition-all ${
@@ -291,6 +292,26 @@ export const HeroSection: React.FC = () => {
                   <span>CONFIG_SRC</span>
                 </span>
               </button>
+
+              <button
+                onClick={() => setActiveVisualTab('avatar')}
+                className={`px-3 py-1 uppercase border transition-all ${
+                  activeVisualTab === 'avatar'
+                    ? isCobalt
+                      ? 'border-white bg-white text-[#0000F2] font-bold shadow-[0_0_12px_rgba(255,255,255,0.6)]'
+                      : 'border-[#0000F2] bg-[#0000F2] text-white shadow-[0_0_12px_rgba(0,0,242,0.6)]'
+                    : isCobalt
+                    ? 'border-white/40 bg-[#000091] text-white/80 hover:text-white'
+                    : isLight
+                    ? 'border-[#0000F2]/30 bg-white text-[#4B5563] hover:text-[#0000F2]'
+                    : 'border-[#0000F2]/30 bg-[#101010] text-[#8e8e8e] hover:text-white'
+                }`}
+              >
+                <span className="flex items-center gap-1.5">
+                  <User className="w-3.5 h-3.5" />
+                  <span>AVATAR_HOAGIAP</span>
+                </span>
+              </button>
             </div>
 
             <DoubleBezelCard
@@ -300,7 +321,7 @@ export const HeroSection: React.FC = () => {
               {activeVisualTab === '3d' ? (
                 /* Three.js Interactive Wireframe */
                 <Hero3DCanvas />
-              ) : (
+              ) : activeVisualTab === 'code' ? (
                 /* Code Snippet Terminal View */
                 <div>
                   <div
@@ -391,6 +412,94 @@ export const HeroSection: React.FC = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+              ) : (
+                /* Portrait Avatar View */
+                <div
+                  className={`relative w-full h-[360px] sm:h-[400px] flex items-center justify-center overflow-hidden select-none transition-all ${
+                    isCobalt
+                      ? 'bg-white text-[#0000F2]'
+                      : isLight
+                      ? 'bg-[#F4F6FB] text-[#0000F2]'
+                      : 'bg-[#101010] text-[#F2F2F2]'
+                  }`}
+                >
+                  {/* Subtle Blueprint Grid Pattern in Avatar Panel */}
+                  <div
+                    className="absolute inset-0 pointer-events-none opacity-25"
+                    style={{
+                      backgroundImage: `linear-gradient(${isCobalt || isLight ? '#0000F2' : '#0000F2'} 1px, transparent 1px), linear-gradient(90deg, ${isCobalt || isLight ? '#0000F2' : '#0000F2'} 1px, transparent 1px)`,
+                      backgroundSize: '24px 24px',
+                    }}
+                  />
+
+                  {/* Ambient backlight glow in dark mode for blue etching */}
+                  {!isCobalt && !isLight && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="w-72 h-72 rounded-full bg-[#0000F2]/25 blur-3xl" />
+                    </div>
+                  )}
+
+                  {/* Technical Crosshairs & Corner Registration Marks */}
+                  <div className={`absolute top-2 left-2 text-[10px] font-mono pointer-events-none ${isCobalt || isLight ? 'text-[#0000F2]/50' : 'text-[#0000F2]/60'}`}>+</div>
+                  <div className={`absolute top-2 right-2 text-[10px] font-mono pointer-events-none ${isCobalt || isLight ? 'text-[#0000F2]/50' : 'text-[#0000F2]/60'}`}>+</div>
+                  <div className={`absolute bottom-2 left-2 text-[10px] font-mono pointer-events-none ${isCobalt || isLight ? 'text-[#0000F2]/50' : 'text-[#0000F2]/60'}`}>+</div>
+                  <div className={`absolute bottom-2 right-2 text-[10px] font-mono pointer-events-none ${isCobalt || isLight ? 'text-[#0000F2]/50' : 'text-[#0000F2]/60'}`}>+</div>
+
+                  {/* Technical Top-Left Badge */}
+                  <div
+                    className={`absolute top-3.5 left-4 flex items-center gap-1.5 px-2.5 py-1 rounded-none border text-[11px] font-mono z-10 ${
+                      isCobalt
+                        ? 'bg-white border-[#0000F2] text-[#0000F2] shadow-sm'
+                        : isLight
+                        ? 'bg-white border-[#0000F2]/50 text-[#0000F2] shadow-sm'
+                        : 'bg-[#141414] border-[#0000F2]/60 text-[#F2F2F2]'
+                    }`}
+                  >
+                    <User className="w-3.5 h-3.5 text-[#0000F2]" />
+                    <span className="font-bold">[ PORTRAIT // HOA_GIAP ]</span>
+                  </div>
+
+                  {/* Technical Top-Right Spec Badge */}
+                  <div
+                    className={`hidden sm:flex absolute top-3.5 right-4 items-center gap-1 px-2 py-0.5 border text-[10px] font-mono z-10 ${
+                      isCobalt
+                        ? 'bg-white/90 border-[#0000F2]/40 text-[#0000F2]'
+                        : isLight
+                        ? 'bg-white/90 border-[#0000F2]/30 text-[#0000F2]'
+                        : 'bg-[#141414]/90 border-[#0000F2]/40 text-[#8e8e8e]'
+                    }`}
+                  >
+                    <span>[ ETCHED_CHROMA ]</span>
+                  </div>
+
+                  {/* Portrait Artwork Image */}
+                  <div className="relative w-full h-full flex items-center justify-center pt-8 pb-4 px-6 z-0">
+                    <img
+                      src="/imgs/avata_hoagiap.png"
+                      alt="Trần Huỳnh Hoa Giáp - Portrait"
+                      className={`max-h-[290px] sm:max-h-[320px] w-auto object-contain transition-transform duration-500 hover:scale-105 ${
+                        !isCobalt && !isLight
+                          ? 'filter drop-shadow-[0_0_25px_rgba(0,0,242,0.8)] brightness-110 contrast-125'
+                          : 'filter drop-shadow-[0_4px_16px_rgba(0,0,242,0.2)]'
+                      }`}
+                      loading="eager"
+                    />
+                  </div>
+
+                  {/* Technical Bottom Registration Bar */}
+                  <div
+                    className={`absolute bottom-3 inset-x-5 flex items-center justify-between px-3 py-1 border text-[10px] font-mono z-10 ${
+                      isCobalt
+                        ? 'bg-white/95 border-[#0000F2]/40 text-[#0000F2]'
+                        : isLight
+                        ? 'bg-white/95 border-[#0000F2]/30 text-[#0000F2]'
+                        : 'bg-[#141414]/95 border-[#0000F2]/40 text-[#8e8e8e]'
+                    }`}
+                  >
+                    <span>ID: THHG_2026 // ENG_CS</span>
+                    <span className="font-bold text-[#0000F2]">[ STATUS: VERIFIED ]</span>
                   </div>
                 </div>
               )}
