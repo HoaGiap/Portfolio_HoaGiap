@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root, [data-theme="dark"], .theme-dark {
+    --bg-page: #101010;
+    --bg-card: #141414;
+    --bg-inner: #101010;
+    --text-main: #F2F2F2;
+    --text-muted: #8e8e8e;
+    --text-heading: #FFFFFF;
+    --text-accent: #0000F2;
+    --primary: #0000F2;
+    --secondary: #000091;
+    --border-card: rgba(0, 0, 242, 0.3);
+    --border-accent: #0000F2;
+    --shadow-glow: rgba(0, 0, 242, 0.35);
+    --grid-color: rgba(0, 0, 242, 0.08);
+    --corner-tick: #0000F2;
+    --selection-bg: #0000F2;
+    --selection-text: #FFFFFF;
+    --scrollbar-track: #101010;
+    --scrollbar-thumb: #0000F2;
+    --nav-bg: rgba(16, 16, 16, 0.9);
+    --tag-bg: #141414;
+    --tag-text: #F2F2F2;
+    --tag-border: rgba(0, 0, 242, 0.3);
+  }
+
+  [data-theme="cobalt"], .theme-cobalt {
+    --bg-page: #0000F2;
+    --bg-card: #0000bd;
+    --bg-inner: #000091;
+    --text-main: #FFFFFF;
+    --text-muted: #B8C8FF;
+    --text-heading: #FFFFFF;
+    --text-accent: #FFFFFF;
+    --primary: #FFFFFF;
+    --secondary: #000091;
+    --border-card: rgba(255, 255, 255, 0.35);
+    --border-accent: #FFFFFF;
+    --shadow-glow: rgba(255, 255, 255, 0.35);
+    --grid-color: rgba(255, 255, 255, 0.12);
+    --corner-tick: #FFFFFF;
+    --selection-bg: #FFFFFF;
+    --selection-text: #0000F2;
+    --scrollbar-track: #000091;
+    --scrollbar-thumb: #FFFFFF;
+    --nav-bg: rgba(0, 0, 242, 0.95);
+    --tag-bg: #000091;
+    --tag-text: #FFFFFF;
+    --tag-border: rgba(255, 255, 255, 0.4);
+  }
+
+  [data-theme="light"], .theme-light {
+    --bg-page: #FFFFFF;
+    --bg-card: #F6F8FC;
+    --bg-inner: #FFFFFF;
+    --text-main: #111827;
+    --text-muted: #4B5563;
+    --text-heading: #0000F2;
+    --text-accent: #0000F2;
+    --primary: #0000F2;
+    --secondary: #000091;
+    --border-card: rgba(0, 0, 242, 0.25);
+    --border-accent: #0000F2;
+    --shadow-glow: rgba(0, 0, 242, 0.25);
+    --grid-color: rgba(0, 0, 242, 0.07);
+    --corner-tick: #0000F2;
+    --selection-bg: #0000F2;
+    --selection-text: #FFFFFF;
+    --scrollbar-track: #F0F4FF;
+    --scrollbar-thumb: #0000F2;
+    --nav-bg: rgba(255, 255, 255, 0.92);
+    --tag-bg: #F0F4FF;
+    --tag-text: #0000F2;
+    --tag-border: rgba(0, 0, 242, 0.3);
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.01em;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* Compressed Towering Headings (Hermes Rules Gothic style) */
+  h1, h2, h3, .font-hermes-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    color: var(--text-heading);
+  }
+}
+
+/* Hermes Technical Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.2);
+}
+
+/* Hermes Blueprint Grid */
+.bg-hermes-grid {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+}
+
+/* Technical Inset Box Shadow from DESIGN.md */
+.hermes-inset-border {
+  box-shadow: inset 0 0 0 0.5px var(--border-accent);
+}
+
+.hermes-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  box-shadow: inset 0 0 0 0.5px var(--border-card);
+}
+
+.hermes-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: 0 0 20px -5px var(--shadow-glow), inset 0 0 0 0.5px var(--border-accent);
+}
+
+/* Technical Corner Markings [ + ] */
+.corner-tick-tl {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid var(--corner-tick);
+  border-left: 2px solid var(--corner-tick);
+}
+
+.corner-tick-tr {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid var(--corner-tick);
+  border-right: 2px solid var(--corner-tick);
+}
+
+.corner-tick-bl {
+  position: absolute;
+  bottom: -1px;
+  left: -1px;
+  width: 6px;
+  height: 6px;
+  border-bottom: 2px solid var(--corner-tick);
+  border-left: 2px solid var(--corner-tick);
+}
+
+.corner-tick-br {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 6px;
+  height: 6px;
+  border-bottom: 2px solid var(--corner-tick);
+  border-right: 2px solid var(--corner-tick);
+}
