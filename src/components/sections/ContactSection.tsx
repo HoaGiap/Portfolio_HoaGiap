@@ -58,33 +58,64 @@ export const ContactSection: React.FC = () => {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setErrors({});
 
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.8 },
-        colors: isCobalt ? ['#FFFFFF', '#A0C4FF', '#000091'] : ['#0000F2', '#000091', '#FFFFFF', '#60a5fa'],
+    try {
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || 'd068b6be-b7ad-4482-b7a0-6af1bc85cf47';
+      const formPayload = new FormData();
+      formPayload.append('access_key', accessKey);
+      formPayload.append('name', formData.name);
+      formPayload.append('email', formData.email);
+      formPayload.append('subject', formData.subject);
+      formPayload.append('message', formData.message);
+      formPayload.append('from_name', 'HoaGiap.dev Portfolio');
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formPayload,
       });
 
+      const data = await response.json();
+
+      if (data.success) {
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setErrors({});
+
+        confetti({
+          particleCount: 80,
+          spread: 60,
+          origin: { y: 0.8 },
+          colors: isCobalt ? ['#FFFFFF', '#A0C4FF', '#000091'] : ['#0000F2', '#000091', '#FFFFFF', '#60a5fa'],
+        });
+
+        setToast({
+          show: true,
+          message: 'TIN NHẮN ĐÃ ĐƯỢC GỬI VỀ GMAIL! TÔI SẼ PHẢN HỒI QUA EMAIL TRONG 24H.',
+          type: 'success',
+        });
+      } else {
+        setToast({
+          show: true,
+          message: data.message || 'CÓ LỖI XẢY RA KHI GỬI TIN NHẮN. VUI LÒNG THỬ LẠI HOẶC GỬI EMAIL TRỰC TIẾP.',
+          type: 'error',
+        });
+      }
+    } catch {
       setToast({
         show: true,
-        message: 'ĐÃ TIẾP NHẬN THÔNG ĐIỆP. TÔI SẼ PHẢN HỒI QUA EMAIL TRONG 24H.',
-        type: 'success',
+        message: 'LỖI KẾT NỐI MẠNG. VUI LÒNG THỬ LẠI HOẶC GỬI EMAIL TRỰC TIẾP.',
+        type: 'error',
       });
-
+    } finally {
+      setIsSubmitting(false);
       setTimeout(() => {
         setToast((prev) => ({ ...prev, show: false }));
       }, 5000);
-    }, 1000);
+    }
   };
 
   const handleCopyEmail = () => {
