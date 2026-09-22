@@ -21,7 +21,7 @@ export interface Project {
 export interface SkillItem {
   name: string;
   level: number; // 0 - 100
-  proficiency: 'Chuyên gia' | 'Nâng cao' | 'Thành thạo';
+  proficiency: string;
   icon: string;
   experienceYears: string;
   isCore?: boolean;
